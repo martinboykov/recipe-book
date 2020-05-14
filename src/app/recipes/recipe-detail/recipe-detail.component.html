@@ -1,0 +1,48 @@
+
+<ng-container *ngIf="recipeSelected">
+  <div class="row">
+    <div class="col-md-12">
+      <img src="{{recipe?.imagePath}}"
+           alt="{{recipe?.name}}"
+           class="image-responsive">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h1>{{recipe?.name}}</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="btn-group">
+        <button type="button"
+                class="btn btn-primary dropdown-toggle"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false">
+          Menage Recipe
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item"
+             href="#">To Shopping List</a>
+          <a class="dropdown-item"
+             href="#">Edit Recipe</a>
+          <a class="dropdown-item"
+             href="#">Delete Recipe</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      {{recipe?.description}}
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      Ingredients
+    </div>
+  </div>
+</ng-container>
+<p *ngIf="!recipeSelected">Select a Recipe</p>
