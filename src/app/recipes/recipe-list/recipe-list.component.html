@@ -6,7 +6,6 @@
 <hr>
 <ul class="row">
   <ng-container *ngFor="let recipe of recipes">
-    <app-recipe-item [recipe]="recipe"
-                     (click)="onRecipeSelected(recipe)"></app-recipe-item>
+    <app-recipe-item [recipe]="recipe"></app-recipe-item>
   </ng-container>
 </ul>

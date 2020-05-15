@@ -9,3 +9,16 @@ header > .navbar {
 .navbar-collapse {
   justify-content: space-between;
 }
+.bi-book {
+  width: 50px;
+  height: auto;
+}
+.navbar-light .navbar-nav .nav-link {
+  color: var(--dark);
+  transition: transform 0.3s linear;
+  backface-visibility: hidden;
+}
+.navbar-light .navbar-nav .nav-link.active {
+  color: var(--grey);
+  transform: scale(1.05) translateZ(0);;
+}

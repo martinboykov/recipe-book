@@ -6,12 +6,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
-  @Output() routeChange = new EventEmitter<string>();
-
   constructor() {}
 
   ngOnInit(): void {}
-  changeRoute(linkRecipe: HTMLAnchorElement) {
-    this.routeChange.emit(linkRecipe.innerText);
-  }
 }

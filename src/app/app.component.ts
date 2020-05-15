@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  route = 'Shopping List';
+  route = 'Recipe Book';
   onRouteChanged(route: string) {
     this.route = route;
   }
