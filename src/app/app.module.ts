@@ -12,6 +12,7 @@ import { RecipeDetailComponent } from './recipes/recipe-detail/recipe-detail.com
 import { ShopService } from './shop.service';
 import { RecipeService } from './recipe.service';
 import { AppRoutingModule } from './app-routing.module';
+import { RecipeEditComponent } from './recipe-edit/recipe-edit.component';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { AppRoutingModule } from './app-routing.module';
     RecipeListComponent,
     RecipeItemComponent,
     RecipeDetailComponent,
+    RecipeEditComponent,
   ],
   imports: [BrowserModule,  AppRoutingModule],
   providers: [ShopService, RecipeService],

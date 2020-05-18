@@ -7,9 +7,9 @@ import { Ingredient } from './shop/ingredient.model';
 export class ShopService {
   @Output() ingredientsUpdated = new EventEmitter<Ingredient[]>();
   ingredients = [
-    new Ingredient('Ingredient 1', 10),
-    new Ingredient('Ingredient 2', 7),
-    new Ingredient('Ingredient 3', 3),
+    // new Ingredient('Ingredient 1', 10),
+    // new Ingredient('Ingredient 2', 7),
+    // new Ingredient('Ingredient 3', 3),
   ];
   constructor() {}
   getIngredients() {

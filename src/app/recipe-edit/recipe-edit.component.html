@@ -1,0 +1,4 @@
+<p *ngIf="editMode; else newMode">Edit old recipe</p>
+<ng-template #newMode>
+    <p>Add new Recipe</p>
+</ng-template>

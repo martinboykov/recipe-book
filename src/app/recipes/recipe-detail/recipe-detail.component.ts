@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Recipe } from '../recipe.model';
 import { RecipeService } from 'src/app/recipe.service';
 import { ShopService } from 'src/app/shop.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -12,15 +12,20 @@ import { Router } from '@angular/router';
 export class RecipeDetailComponent implements OnInit {
   recipe: Recipe;
   recipeIndex: number;
+  id: any;
   constructor(
     private recipeService: RecipeService,
     private shopService: ShopService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.recipeService.recipeSelected.subscribe((recipe) => {
-      this.recipe = recipe;
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      this.id = params.get('id');
+      if (this.id) {
+        this.recipe = this.recipeService.getRecipe(Number(this.id));
+      }
     });
   }
   sendIngredients(ingredients) {

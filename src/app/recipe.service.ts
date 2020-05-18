@@ -6,7 +6,6 @@ import { Ingredient } from './shop/ingredient.model';
   providedIn: 'root',
 })
 export class RecipeService {
-  @Output() recipeSelected = new EventEmitter<Recipe>();
   recipes = [
     new Recipe(
       'Recipe 1',
@@ -33,5 +32,7 @@ export class RecipeService {
   getRecipes() {
     return this.recipes.slice();
   }
-
+  getRecipe(id: number) {
+    return this.recipes.find((recipe) => recipe.id === id);
+  }
 }

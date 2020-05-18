@@ -1,4 +1,7 @@
-<p *ngIf="!recipe;else showRecipe">Select a Recipe</p>
+<p *ngIf="!id;else second">Please select a Recipe</p>
+<ng-template #second>
+  <p *ngIf="!recipe;else showRecipe">No such recipe</p>
+</ng-template>
 <ng-template #showRecipe>
   <div class="row">
     <div class="col-md-12">
@@ -27,8 +30,10 @@
         </button>
         <div class="dropdown-menu">
           <a class="dropdown-item"
-             (click)="sendIngredients(recipe.ingredients)">To Shopping List</a>
-          <a class="dropdown-item">Edit Recipe</a>
+             (click)="sendIngredients(recipe.ingredients)">Add To Shopping List</a>
+          <a class="dropdown-item"
+             [routerLink]="['/recipe-book', recipe.id, 'edit']"
+             class="dropdown-item">Edit Recipe</a>
           <a class="dropdown-item">Delete Recipe</a>
         </div>
       </div>
