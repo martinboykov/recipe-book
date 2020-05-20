@@ -1,0 +1,27 @@
+form > div.row:last-child .btn-success {
+  margin: 0 10px 0 0;
+}
+.add-ingredient {
+  margin: 0 0 15px 0;
+}
+.del-ingredient {
+  display: grid;
+}
+.del-ingredient .btn {
+  align-self: center;
+  justify-self: center;
+  border-radius: 50%;
+  position: relative;
+  padding: 15px;
+}
+.del-ingredient .btn:after {
+  content: "\2715";
+  color: white;
+  position: absolute;
+  font-size: 16px;
+  line-height: 16px;
+  top: 50%;
+  left: 50%;
+  display: block;
+  transform: translate(-50%, -50%);
+}

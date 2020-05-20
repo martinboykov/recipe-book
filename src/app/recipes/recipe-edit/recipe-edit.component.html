@@ -1,0 +1,98 @@
+<div class="row">
+    <div class="col-md-12">
+        <form [formGroup]="recipeForm"
+              (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text"
+                               id="name"
+                               class="form-control"
+                               formControlName="name">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="name">Image URL/Path</label>
+                        <input type="text"
+                               id="imagePath"
+                               class="form-control"
+                               formControlName="imagePath">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <img src="{{imagePath.value}}"
+                         alt="{{name.value}}"
+                         class="img-responsive">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="name">Description</label>
+                        <textarea name=""
+                                  id="description"
+                                  rows="6"
+                                  class="form-control"
+                                  formControlName="description"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12"
+                     formArrayName="ingredients">
+                    <button class="btn btn-primary add-ingredient"
+                            type="button"
+                            (click)="addIngredient()">Add Ingredient</button>
+                    <div *ngFor="let ingredient of ingredients.controls; let i = index">
+                        <div class="row"
+                             [formGroup]="ingredient">
+                            <div class="col-10">
+                                <div class="row">
+                                    <div class="col-sm-8 form-group">
+                                        <input type="text"
+                                               class="form-control"
+                                               formControlName="name">
+                                    </div>
+                                    <div class="col form-group">
+                                        <input type="number"
+                                               class="form-control"
+                                               formControlName="amount">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col form-group del-ingredient">
+                                <button class="btn btn-danger"
+                                        type="button"
+                                        (click)="delIngredient(i)"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <ng-container *ngIf="editMode;else addMode">
+                        <button class="btn btn-success"
+                                type="button"
+                                (click)="onEditRecipe()"
+                                [disabled]="!recipeForm.valid">Edit</button>
+                    </ng-container>
+                    <ng-template #addMode>
+                        <button class="btn btn-success"
+                                type="submit"
+                                [disabled]="!recipeForm.valid">Save</button>
+                    </ng-template>
+                    <button class="btn btn-danger"
+                            type="button"
+                            (click)="goBack()">Cancel</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

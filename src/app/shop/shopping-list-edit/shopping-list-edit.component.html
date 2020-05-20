@@ -1,34 +1,62 @@
 <div class="row">
   <div class="col-md-12">
-    <form>
+    <form id="ingForm"
+          (ngSubmit)="addIngredient()"
+          #ingForm="ngForm">
       <div class="row">
         <div class="col-sm-5 form-group">
           <label for="name">Name</label>
           <input type="text"
                  id="name"
                  class="form-control"
-                 #name>
+                 required
+                 [(ngModel)]="ingredient.name"
+                 name="name"
+                 #name="ngModel">
+          <span class="help-block"
+                *ngIf="name.invalid && name.touched">Please enter a name</span>
         </div>
-        <div class="col-sm-2 form-group">
+        <div class="col form-group">
           <label for="amount">Amount</label>
           <input type="number"
                  id="amount"
                  class="form-control"
-                 #amount>
+                 name="amount"
+                 required
+                 [(ngModel)]="ingredient.amount"
+                 #amount="ngModel">
+          <span class="help-block"
+                *ngIf="amount.invalid && amount.touched">Please enter an amount</span>
         </div>
       </div>
       <div class="row">
         <div class="col-md-12">
-          <button class="btn btn-success"
-                  (click)="add({name: name, amount: amount})"
-                  type="button">Add</button>
+
+          <ng-container *ngIf="!isSelected;else notSelected">
+            <button class="btn btn-success"
+                    type="submit"
+                    [disabled]="ingForm.form.invalid">Add</button>
+          </ng-container>
+          <ng-template #notSelected><button class="btn btn-success"
+                    type="button"
+                    (click)="updateIngredient()"
+                    [disabled]="ingForm.form.invalid">Update</button>
+          </ng-template>
+
+
           <button class="btn btn-danger"
-                  (click)="delete(name, amount)"
-                  type="button">Delete</button>
+                  type="button"
+                  (click)="deleteIngredient()"
+                  [disabled]="ingForm.form.invalid">Delete</button>
           <button class="btn btn-primary"
-                  type="button">Clear</button>
+                  type="button"
+                  (click)="onClear()"
+                  [disabled]="ingForm.form.invalid">Clear</button>
         </div>
       </div>
     </form>
   </div>
 </div>
+<ng-container *ngIf="ifDev">
+  <p>{{diagnostics|json}}</p>
+</ng-container>

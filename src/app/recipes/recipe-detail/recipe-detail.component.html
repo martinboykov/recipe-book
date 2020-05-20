@@ -10,33 +10,34 @@
            class="image-responsive">
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-12">
+  <div class="row  mt-2">
+    <div class="col-auto mr-auto">
       <h2>{{recipe.name}}</h2>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-auto mr-auto">
-      <h4>{{recipe.description}}</h4>
-    </div>
     <div class="col-auto">
-      <div class="btn-group mb-3">
+      <div class="btn-group">
         <button type="button"
                 class="btn btn-primary dropdown-toggle"
                 data-toggle="dropdown"
                 aria-haspopup="true"
-                aria-expanded="false">
+                aria-expanded="true">
           Menage Recipe
         </button>
-        <div class="dropdown-menu">
+        <div class="dropdown-menu dropdown-menu-right">
           <a class="dropdown-item"
              (click)="sendIngredients(recipe.ingredients)">Add To Shopping List</a>
           <a class="dropdown-item"
              [routerLink]="['/recipe-book', recipe.id, 'edit']"
              class="dropdown-item">Edit Recipe</a>
-          <a class="dropdown-item">Delete Recipe</a>
+          <a class="dropdown-item"
+             (click)="delRecipe()">Delete Recipe</a>
         </div>
       </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <h4>{{recipe.description}}</h4>
     </div>
   </div>
 

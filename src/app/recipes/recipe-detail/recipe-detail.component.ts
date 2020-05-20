@@ -3,6 +3,7 @@ import { Recipe } from '../recipe.model';
 import { RecipeService } from 'src/app/recipe.service';
 import { ShopService } from 'src/app/shop.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Ingredient } from 'src/app/shop/ingredient.model';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -28,11 +29,15 @@ export class RecipeDetailComponent implements OnInit {
       }
     });
   }
-  sendIngredients(ingredients) {
+  sendIngredients(ingredients: Ingredient[]) {
     ingredients.forEach((ingredient) => {
       this.shopService.addIngredient(ingredient);
     });
     this.shopService.updateIngredients();
-    this.router.navigate(['/shopping-list']);
+    this.router.navigate(['shopping-list']);
+  }
+  delRecipe() {
+    this.recipeService.deleteRecipe(this.recipe.id);
+    this.router.navigate(['recipe-book']);
   }
 }

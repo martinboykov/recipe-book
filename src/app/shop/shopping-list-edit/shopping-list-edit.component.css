@@ -1,3 +1,15 @@
 button {
   margin: 0 10px 0 0;
 }
+input.ng-invalid.ng-touched {
+  border-color: var(--red);
+}
+
+.help-block {
+  color: var(--red);
+  font-size: 12px;
+
+}
+#amount {
+  max-width: 100px;
+}

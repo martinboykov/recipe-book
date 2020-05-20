@@ -8,7 +8,7 @@
 </div>
 <hr>
 <ul class="row">
-  <ng-container *ngFor="let recipe of recipes">
+  <li class="col-md-12" *ngFor="let recipe of recipes">
     <app-recipe-item [recipe]="recipe"></app-recipe-item>
-  </ng-container>
+  </li>
 </ul>
