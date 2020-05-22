@@ -8,12 +8,10 @@ import { Subject } from 'rxjs';
 export class ShopService {
   ingredientsUpdated = new Subject<Ingredient[]>();
   ingredientSelected = new Subject<Ingredient>();
-  ingredients = [
-    new Ingredient('Ingredient 1', 10, 1),
-    new Ingredient('Ingredient 2', 7, 2),
-    new Ingredient('Ingredient 3', 3, 3),
-  ];
+  ingredients = [];
+
   constructor() {}
+
   getIngredients() {
     return this.ingredients.slice();
   }

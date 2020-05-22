@@ -1,45 +1,29 @@
 import { Injectable, EventEmitter, Output } from '@angular/core';
 import { Recipe } from './recipes/recipe.model';
-import { Ingredient } from './shop/ingredient.model';
 import { BehaviorSubject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../environments/environment';
+const BACKEND_URL = environment.backendUrl;
 
 @Injectable({
   providedIn: 'root',
 })
 export class RecipeService {
   recipesUpdated = new BehaviorSubject<Recipe[]>(null);
-  recipes = [
-    new Recipe(
-      'Recipe 1',
-      'Some test description1',
-      './assets/images/meat-4813261_1280.jpg',
-      [
-        new Ingredient('Ingredient 1', 10, 1),
-        new Ingredient('Ingredient 2', 7, 2),
-        new Ingredient('Ingredient 3', 3, 3),
-      ],
-      1
-    ),
-    new Recipe(
-      'Recipe 2',
-      'Some test description2',
-      './assets/images/kagyana-2955466_1280.jpg',
-      [
-        new Ingredient('Ingredient 1', 3, 1),
-        new Ingredient('Ingredient 4', 2, 4),
-        new Ingredient('Ingredient 5', 8, 5),
-      ],
-      2
-    ),
-  ];
-  constructor() {}
+  recipes: Recipe[] = [];
+  recipe: Recipe;
+  constructor(private http: HttpClient) {}
+
   getRecipes() {
-    const recipes = this.recipes.slice();
-    this.updatedRecipes();
-    return recipes;
+    this.http
+      .get(BACKEND_URL + 'recipes/')
+      .subscribe((response: { message: string; data: Recipe[] }) => {
+        this.recipes = [...response.data];
+        this.updatedRecipes();
+      });
   }
-  getRecipe(id: number) {
-    return this.recipes.find((recipe) => recipe.id === id);
+  getRecipe(_id: string) {
+    return this.http.get(BACKEND_URL + 'recipes/' + _id);
   }
   addRecipe(newRecipe: Recipe) {
     const recipe = new Recipe(
@@ -48,18 +32,24 @@ export class RecipeService {
       newRecipe.imagePath,
       newRecipe.ingredients
     );
-    this.recipes.push(recipe);
-    this.updatedRecipes();
+    this.http.post(BACKEND_URL + 'recipes', recipe).subscribe((response) => {
+      this.getRecipes();
+    });
   }
-  updateRecipe(upRecipe: Recipe) {
-    const recipe = this.recipes.find((r) => r.id === upRecipe.id);
-    Object.assign(recipe, upRecipe);
-    this.updatedRecipes();
+  editRecipe(upRecipe: Recipe) {
+    console.log(upRecipe);
+    this.http
+      .put(BACKEND_URL + 'recipes/' + upRecipe._id, upRecipe)
+      .subscribe((response: { message: string; data: Recipe }) => {
+        const recipe = this.recipes.find((r) => r._id === upRecipe._id);
+        Object.assign(recipe, upRecipe);
+        this.updatedRecipes();
+      });
   }
-  deleteRecipe(id: number) {
-    const index = this.recipes.findIndex((recipe) => recipe.id === id);
-    this.recipes.splice(index, 1);
-    this.updatedRecipes();
+  deleteRecipe(_id: string) {
+    this.http.delete(BACKEND_URL + 'recipes/' + _id).subscribe((response) => {
+      this.getRecipes();
+    });
   }
   updatedRecipes() {
     this.recipesUpdated.next(this.recipes.slice());

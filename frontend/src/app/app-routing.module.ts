@@ -6,15 +6,15 @@ import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component
 import { ShopComponent } from './shop/shop.component';
 
 const appRoutes: Routes = [
-  { path: '',   redirectTo: '/shopping-list', pathMatch: 'full' },
+  { path: '',   redirectTo: '/recipe-book', pathMatch: 'full' },
   {
     path: 'recipe-book',
     component: RecipeComponent,
     children: [
       { path: '', component: RecipeDetailComponent },
       { path: 'new', component: RecipeEditComponent },
-      { path: ':id', component: RecipeDetailComponent },
-      { path: ':id/edit', component: RecipeEditComponent },
+      { path: ':_id', component: RecipeDetailComponent },
+      { path: ':_id/edit', component: RecipeEditComponent },
     ],
   },
   { path: 'shopping-list', component: ShopComponent },

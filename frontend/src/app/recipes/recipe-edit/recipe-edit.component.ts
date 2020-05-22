@@ -16,14 +16,14 @@ import {
 })
 export class RecipeEditComponent implements OnInit {
   recipe: Recipe;
-  id: number;
+  _id: string;
   editMode: boolean;
   recipeForm = this.fb.group({
-    id: [''],
+    _id: [''],
     name: ['', Validators.required],
     imagePath: ['', Validators.required],
     description: ['', Validators.required],
-    // ingredients: this.fb.array([], validateSize),
+    ingredients: new FormArray([]),
   });
 
   constructor(
@@ -48,46 +48,30 @@ export class RecipeEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params: ParamMap) => {
-      this.id = Number(params.get('id'));
-      if (this.id) {
+      this._id = params.get('_id');
+      if (this._id) {
         this.editMode = true;
-        this.recipe = this.recipeService.getRecipe(this.id);
-        this.recipeForm.patchValue({
-          id: this.recipe.id,
-          name: this.recipe.name,
-          imagePath: this.recipe.imagePath,
-          description: this.recipe.description,
-        });
-        const ingArrControl = this.recipe.ingredients.reduce(
-          (prevValue, currValue) => {
-            prevValue.push(
-              this.fb.group({
-                name: [currValue.name, Validators.required],
-                amount: [currValue.amount, Validators.required],
-              })
-            );
-            return prevValue;
-          },
-          []
-        );
-        this.recipeForm.registerControl(
-          'ingredients',
-          new FormArray(ingArrControl, validateSize)
-        );
+        this.recipeService
+          .getRecipe(this._id)
+          .subscribe((res: { msg: string; data: Recipe }) => {
+            this.recipe = res.data;
+            this.recipeForm.patchValue({
+              _id: this.recipe._id,
+              name: this.recipe.name,
+              imagePath: this.recipe.imagePath,
+              description: this.recipe.description,
+            });
+            this.recipe.ingredients.forEach((recipe) => {
+              this.ingredients.push(
+                this.fb.group({
+                  name: [recipe.name, Validators.required],
+                  amount: [recipe.amount, Validators.required],
+                })
+              );
+            });
+          });
       } else {
         this.editMode = false;
-        this.recipeForm.registerControl(
-          'ingredients',
-          new FormArray(
-            [
-              this.fb.group({
-                name: ['', Validators.required],
-                amount: ['', Validators.required],
-              }),
-            ],
-            validateSize
-          )
-        );
       }
     });
     this.recipeForm.statusChanges.subscribe((changes) => {
@@ -110,7 +94,7 @@ export class RecipeEditComponent implements OnInit {
     this.router.navigate(['recipe-book']);
   }
   onEditRecipe() {
-    this.recipeService.updateRecipe(this.recipeForm.value);
+    this.recipeService.editRecipe(this.recipeForm.value);
     this.goBack();
   }
   goBack() {

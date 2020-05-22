@@ -8,7 +8,6 @@ import {
 import { ShopService } from 'src/app/shop.service';
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { environment } from './../../../environments/environment';
 import { Ingredient } from '../ingredient.model';
 @Component({
   selector: 'app-shopping-list-edit',
@@ -27,7 +26,6 @@ export class ShoppingListEditComponent
   constructor(private shopService: ShopService) {}
 
   ngOnInit(): void {
-    this.ifDev = !environment.production;
     this.ingredient = {
       name: '',
       amount: null,
@@ -39,11 +37,8 @@ export class ShoppingListEditComponent
     });
   }
 
-  submitForm() {}
-
   addIngredient() {
     this.shopService.addIngredient(this.ingredient);
-    // this.ingForm.resetForm();
     this.onClear();
   }
   updateIngredient() {
