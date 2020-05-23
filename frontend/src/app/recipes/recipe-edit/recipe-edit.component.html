@@ -28,7 +28,7 @@
                 <div class="col-md-12">
                     <img src="{{imagePath?.value}}"
                          alt="{{name?.value}}"
-                         class="img-responsive">
+                         class="img-responsive mb-3">
                 </div>
             </div>
             <div class="row">
@@ -49,30 +49,28 @@
                     <button class="btn btn-primary add-ingredient"
                             type="button"
                             (click)="addIngredient()">Add Ingredient</button>
-                    <div *ngFor="let ingredient of ingredients?.controls; let i = index">
-                        <div class="row"
+                    <ng-container *ngFor="let ingredient of ingredients?.controls; let i = index">
+                        <div class="row ingredients"
                              [formGroup]="ingredient">
-                            <div class="col-10">
-                                <div class="row">
-                                    <div class="col-sm-8 form-group">
-                                        <input type="text"
-                                               class="form-control"
-                                               formControlName="name">
-                                    </div>
-                                    <div class="col form-group">
-                                        <input type="number"
-                                               class="form-control"
-                                               formControlName="amount">
-                                    </div>
-                                </div>
+                            <div class="col-6 col-sm-8 col-md-9 form-group">
+                                <input type="text"
+                                       class="form-control"
+                                       formControlName="name">
                             </div>
-                            <div class="col form-group del-ingredient">
+                            <div class="col-3 col-sm-2 col-md-2 form-group">
+                                <input type="text"
+                                       class="form-control "
+                                       formControlName="amount"
+                                       style="text-align: right;">
+                            </div>
+                            <div class="col-3 col-sm-2 col-md-1 form-group del-ingredient">
                                 <button class="btn btn-danger"
                                         type="button"
                                         (click)="delIngredient(i)"></button>
                             </div>
+
                         </div>
-                    </div>
+                    </ng-container>
                 </div>
             </div>
             <div class="row">

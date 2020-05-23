@@ -75,7 +75,7 @@ export class RecipeEditComponent implements OnInit {
       }
     });
     this.recipeForm.statusChanges.subscribe((changes) => {
-      console.log(changes);
+      // console.log(changes);
     });
   }
   addIngredient() {

@@ -42,17 +42,18 @@ const addRecipe = async (req, res, next) => {
 };
 
 const editRecipe = async (req, res, next) => {
-    const recipe = await Recipe.updateOne({
-        _id: req.params._id,
-    }, {
-        $set: {
-            name: req.body.name,
-            description: req.body.description,
-            imagePath: req.body.imagePath,
-            ingredients: [...req.body.ingredients],
+    const recipe = await Recipe.findOneAndUpdate(
+        { _id: req.params._id },
+        {
+            $set: {
+                name: req.body.name,
+                description: req.body.description,
+                imagePath: req.body.imagePath,
+                ingredients: [...req.body.ingredients]
+            }
         },
-    });
-
+        { new: true }
+    );
     return res.status(201).json({
         message: 'Recipe edited successfully',
         data: recipe,

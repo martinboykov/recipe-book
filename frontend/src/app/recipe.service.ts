@@ -37,7 +37,6 @@ export class RecipeService {
     });
   }
   editRecipe(upRecipe: Recipe) {
-    console.log(upRecipe);
     this.http
       .put(BACKEND_URL + 'recipes/' + upRecipe._id, upRecipe)
       .subscribe((response: { message: string; data: Recipe }) => {

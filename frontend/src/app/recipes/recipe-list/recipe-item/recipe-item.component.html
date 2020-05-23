@@ -1,13 +1,9 @@
 <a routerLink="{{recipe._id}}"
    routerLinkActive="active"
    class="list-group-item clearfix">
-  <div class="left">
-    <h4>{{recipe.name}}</h4>
-    <p>{{recipe.description}}</p>
-  </div>
-  <div class="right">
-    <img class="image-responsive"
-         src="{{recipe.imagePath}}"
-         alt="recipe image for {{recipe.name}}">
-  </div>
+  <img class="image-responsive float-right"
+       src="{{recipe.imagePath}}"
+       alt="recipe image for {{recipe.name}}">
+  <h4 class="">{{recipe.name}}</h4>
+  <p class="">{{recipe.description}}</p>
 </a>

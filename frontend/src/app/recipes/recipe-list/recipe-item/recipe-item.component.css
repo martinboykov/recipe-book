@@ -1,24 +1,23 @@
 img {
   max-width: 100px;
-}
-li {
+  height: auto;
   display: inline-block;
 }
 a {
   text-decoration: none;
-  display: flex;
+  /* display: flex; */
   color: black;
   width: 100%;
-  position: relative;
+  /* position: relative;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; */
   /* align-items: stretch; */
 }
 a:first-child {
   margin: 0 0 10px 0;
 }
 
-.left {
+/* .left {
   padding: 0 10px 0 0;
   flex: 1 100%;
 }
@@ -27,4 +26,4 @@ a:first-child {
 }
 .left img, .right img{
   float: right;
-}
+} */

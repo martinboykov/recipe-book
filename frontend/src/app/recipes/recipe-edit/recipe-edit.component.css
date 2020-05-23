@@ -25,3 +25,14 @@ form > div.row:last-child .btn-success {
   display: block;
   transform: translate(-50%, -50%);
 }
+@media (max-width: 575px) {
+  .ingredients [class^="col-"]:nth-child(even) {
+    padding: 0 3px;
+  }
+}
+
+@media (max-width: 767px) {
+  .ingredients [class^="col-"]:nth-child(even) {
+    padding: 0 7px;
+  }
+}
