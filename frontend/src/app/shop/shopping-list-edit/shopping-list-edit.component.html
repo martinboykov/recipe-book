@@ -33,18 +33,18 @@
         <div class="col-md-12">
 
           <ng-container *ngIf="!isSelected;else notSelected">
-            <button class="btn btn-success"
+            <button class="btn btn-primary"
                     type="submit"
                     [disabled]="ingForm.form.invalid">Add</button>
           </ng-container>
-          <ng-template #notSelected><button class="btn btn-success"
+          <ng-template #notSelected><button class="btn btn-primary"
                     type="button"
                     (click)="updateIngredient()"
                     [disabled]="ingForm.form.invalid">Update</button>
           </ng-template>
 
 
-          <button class="btn btn-danger"
+          <button class="btn btn-primary"
                   type="button"
                   (click)="deleteIngredient()"
                   [disabled]="ingForm.form.invalid">Delete</button>

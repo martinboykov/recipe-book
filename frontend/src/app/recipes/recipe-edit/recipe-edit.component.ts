@@ -2,12 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Recipe } from '../recipe.model';
 import { RecipeService } from '../../recipe.service';
-import {
-  FormBuilder,
-  FormArray,
-  Validators,
-  FormControl,
-} from '@angular/forms';
+import { FormBuilder, FormArray, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -23,7 +18,7 @@ export class RecipeEditComponent implements OnInit {
     name: ['', Validators.required],
     imagePath: ['', Validators.required],
     description: ['', Validators.required],
-    ingredients: new FormArray([]),
+    ingredients: new FormArray([], validateSize),
   });
 
   constructor(
@@ -72,6 +67,12 @@ export class RecipeEditComponent implements OnInit {
           });
       } else {
         this.editMode = false;
+        this.ingredients.push(
+          this.fb.group({
+            name: ['', Validators.required],
+            amount: ['  ', Validators.required],
+          })
+        );
       }
     });
     this.recipeForm.statusChanges.subscribe((changes) => {

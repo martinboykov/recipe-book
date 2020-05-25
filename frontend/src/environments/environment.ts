@@ -2,10 +2,13 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+import { SLACK_WEBHOOK } from './environment.staging';
+
 export const environment = {
   production: false,
   frontendUrl: 'http://localhost:4200',
   backendUrl: 'http://localhost:3000/api/',
+  SLACK_WEBHOOK,
 };
 
 /*

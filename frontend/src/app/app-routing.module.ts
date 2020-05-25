@@ -5,6 +5,7 @@ import { RecipeDetailComponent } from './recipes/recipe-detail/recipe-detail.com
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 import { ShopComponent } from './shop/shop.component';
 import { RecipeListComponent } from './recipes/recipe-list/recipe-list.component';
+import { NotFoundComponent } from './error-handling/not-found.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/recipe-book', pathMatch: 'full' },
@@ -20,7 +21,8 @@ const appRoutes: Routes = [
   },
 
   { path: 'shopping-list', component: ShopComponent },
-  { path: '**', redirectTo: 'shopping-list' },
+  { path: 'not-found', component: NotFoundComponent },
+  { path: '**', redirectTo: 'not-found' },
 ];
 
 @NgModule({
