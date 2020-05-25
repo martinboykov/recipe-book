@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Recipe } from '../recipe.model';
-import { RecipeService } from '../../recipe.service';
+import { RecipeService } from '../recipe.service';
 import { FormBuilder, FormArray, Validators } from '@angular/forms';
 
 @Component({
@@ -95,8 +95,9 @@ export class RecipeEditComponent implements OnInit {
     this.router.navigate(['recipe-book']);
   }
   onEditRecipe() {
-    this.recipeService.editRecipe(this.recipeForm.value);
-    this.goBack();
+    this.recipeService.editRecipe(this.recipeForm.value).subscribe(() => {
+      this.goBack();
+    });
   }
   goBack() {
     this.router.navigate(['../'], { relativeTo: this.route });

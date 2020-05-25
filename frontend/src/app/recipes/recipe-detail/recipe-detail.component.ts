@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Recipe } from '../recipe.model';
-import { RecipeService } from 'src/app/recipe.service';
-import { ShopService } from 'src/app/shop.service';
+import { RecipeService } from 'src/app/recipes/recipe.service';
+import { ShopService } from 'src/app/shop/shop.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Ingredient } from 'src/app/shop/ingredient.model';
 import { Subscription, of } from 'rxjs';
@@ -32,7 +32,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
           if (this._id) {
             return this.recipeService.getRecipe(this._id);
           }
-          return of([]);
+          return of(null);
         })
       )
       .subscribe((res: { msg: string; data: Recipe }) => {

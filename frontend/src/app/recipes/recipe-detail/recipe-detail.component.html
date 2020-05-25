@@ -1,35 +1,29 @@
-<p *ngIf="!recipe;else showRecipe">Please select a Recipe</p>
-<!-- <ng-template #second>
-  <p *ngIf="!recipe;else showRecipe">No such recipe</p>
-</ng-template> -->
-<ng-template #showRecipe>
+<ng-container *ngIf="recipe">
   <div class="row">
     <div class="col-md-12 clearfix">
-      <div class="col-md-5 col-lg-6 float-md-right ml-md-3 right">
-        <img src="{{recipe.imagePath}}"
-             alt="{{recipe.name}}"
-             class="image-responsive md-w-100">
-        <div class="btn-group float-right ml-3">
-          <button type="button"
-                  class="btn btn-primary dropdown-toggle"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="true">
-            Menage Recipe
-          </button>
-          <div class="dropdown-menu dropdown-menu-right">
-            <a class="dropdown-item"
-               (click)="sendIngredients(recipe.ingredients)">Add To Shopping List</a>
-            <a class="dropdown-item"
-               [routerLink]="['/recipe-book', recipe._id, 'edit']"
-               class="dropdown-item">Edit Recipe</a>
-            <a class="dropdown-item"
-               (click)="delRecipe()">Delete Recipe</a>
-          </div>
+      <img src="{{recipe.imagePath}}"
+           alt="{{recipe.name}}"
+           class="image-responsive float-md-right ml-md-3 right">
+      <div class="btn-group float-md-right ml-md-3 right">
+        <button type="button"
+                class="btn btn-primary dropdown-toggle"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="true">
+          Menage Recipe
+        </button>
+        <div class="dropdown-menu dropdown-menu-right">
+          <a class="dropdown-item"
+             (click)="sendIngredients(recipe.ingredients)">Add To Shopping List</a>
+          <a class="dropdown-item"
+             [routerLink]="['/recipe-book', recipe._id, 'edit']"
+             class="dropdown-item">Edit Recipe</a>
+          <a class="dropdown-item"
+             (click)="delRecipe()">Delete Recipe</a>
         </div>
       </div>
       <h1 class="">{{recipe.name}}</h1>
-      <h2 class="">{{recipe.description}}</h2>
+      <p class="">{{recipe.description}}</p>
     </div>
   </div>
 
@@ -44,5 +38,4 @@
       </div>
     </div>
   </div>
-
-</ng-template>
+</ng-container>

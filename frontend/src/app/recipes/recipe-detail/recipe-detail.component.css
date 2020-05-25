@@ -6,11 +6,18 @@ h2 {
 }
 .right {
   padding: 0;
+  clear: right;
 }
 img {
-  /* max-width: 400px; */
+  max-width: 50%;
   margin-bottom: 10px;
 }
 .btn-group {
   margin-bottom: 10px;
+}
+
+@media (max-width: 767px) {
+  img {
+    max-width: none;
+  }
 }

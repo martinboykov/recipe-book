@@ -5,7 +5,7 @@ import {
   AfterViewInit,
   OnDestroy,
 } from '@angular/core';
-import { ShopService } from 'src/app/shop.service';
+import { ShopService } from 'src/app/shop/shop.service';
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Ingredient } from '../ingredient.model';
