@@ -26,6 +26,7 @@ import { ServerErrorInterceptor } from './error-handling/server-error.intercepto
 import { LoggingInterceptor } from './logging/logging-interceptor';
 
 import { ToastrModule } from 'ngx-toastr';
+import { GraphQLModule } from './graphql.module';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { ToastrModule } from 'ngx-toastr';
       countDuplicates: true,
       preventDuplicates: true,
     }),
+    GraphQLModule,
   ],
   providers: [
     ShopService,

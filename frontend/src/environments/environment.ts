@@ -8,6 +8,7 @@ export const environment = {
   production: false,
   frontendUrl: 'http://localhost:4200',
   backendUrl: 'http://localhost:3000/api/',
+  graphqlUrl: 'http://localhost:3000/graphql',
   SLACK_WEBHOOK,
 };
 

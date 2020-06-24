@@ -1,6 +1,8 @@
-const { buildSchema } = require('graphql');
 
-module.exports = buildSchema(`
+const { buildSchema } = require('graphql');
+const { gql } = require('apollo-server-express');
+
+module.exports = gql`
   scalar Date
 
   type Query {
@@ -30,7 +32,7 @@ module.exports = buildSchema(`
     amount: Int!
   }
 
-  schema {
-    query: Query
-  }
-`);
+  # schema {
+  #   query: Query
+  # }
+`;

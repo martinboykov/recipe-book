@@ -1,15 +1,19 @@
-const graphqlHttp = require('express-graphql');
-const graphqlSchema = require('../graphql/schema');
-const graphqlReolver = require('../graphql/resolvers');
-
+const recipeRoutes = require('../routes/recipe');
 const error = require('../middleware/error');
 
+const typeDefs = require('../graphql/schema');
+const resolvers = require('../graphql/resolvers');
+const { ApolloServer } = require('apollo-server-express');
+
+
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+});
+
 module.exports = ((app) => {
-  app.use('/graphql', graphqlHttp({
-    schema: graphqlSchema,
-    rootValue: graphqlReolver,
-    graphiql: true
-  }))
+  server.applyMiddleware({ app });
+  app.use('/api/recipes', recipeRoutes);
   app.use(error);
 });
 
