@@ -94,9 +94,7 @@ export class RecipeEditComponent implements OnInit {
     this.recipeService.addRecipe(this.recipeForm.value);
   }
   onEditRecipe() {
-    this.recipeService.editRecipe(this.recipeForm.value).subscribe(() => {
-      this.goBack();
-    });
+    this.recipeService.editRecipe(this.recipeForm.value);
   }
   goBack() {
     this.router.navigate(['../'], { relativeTo: this.route });

@@ -12,8 +12,11 @@ module.exports = gql`
 
   type Mutation {
     addRecipe(input: NewRecipeInput!): RecipeResponse!
+    editRecipe(input: NewRecipeInput!): RecipeResponse!
+    deleteRecipe(input: ID!): RecipeResponse!
   }
   input NewRecipeInput {
+    _id: String
     name: String!
     description: String!
     imagePath: String!

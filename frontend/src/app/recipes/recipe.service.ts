@@ -4,8 +4,10 @@ import {
   GetRecipesQuery,
   GetRecipeQuery,
   AddRecipeMutation,
-  NewRecipeInput,
   Response,
+  NewRecipeInput,
+  UpdateRecipeMutation,
+  DeleteRecipeMutation,
 } from './recipe.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -13,7 +15,7 @@ import { environment } from '../../environments/environment';
 import { NotificationService } from '../logging/notification.service';
 import { tap, map } from 'rxjs/operators';
 import { Apollo } from 'apollo-angular';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 const BACKEND_URL = environment.backendUrl;
 
@@ -29,6 +31,7 @@ export class RecipeService {
     private http: HttpClient,
     private notifier: NotificationService,
     private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   getRecipes(): Observable<Recipe[]> {
@@ -68,31 +71,74 @@ export class RecipeService {
       .pipe(map((response: any) => response.data.addRecipe))
       .subscribe((result: Response) => {
         const id = result.data._id;
-        this.getRecipes();
         this.notifier.showSuccess(result.message);
         this.router.navigate(['/recipe-book', id]);
       });
   }
-  editRecipe(upRecipe: Recipe) {
-    return this.http
-      .put(BACKEND_URL + 'recipes/' + upRecipe._id, upRecipe)
+  // public updateOwner = (ownerToUpdate: OwnerInputType, id: string) => {
+  //   this.apollo
+  //     .mutate({
+  //       mutation: gql`
+  //         mutation($owner: ownerInput!, $ownerId: ID!) {
+  //           updateOwner(owner: $owner, ownerId: $ownerId) {
+  //             id
+  //             name
+  //             address
+  //           }
+  //         }
+  //       `,
+  //       variables: { owner: ownerToUpdate, ownerId: id },
+  //     })
+  //     .subscribe((result) => {
+  //       this.updatedOwner = result.data as OwnerType;
+  //     });
+  // };
+  editRecipe(upRecipe: NewRecipeInput) {
+    const recipe = {
+      _id: upRecipe._id,
+      name: upRecipe.name,
+      description: upRecipe.description,
+      imagePath: upRecipe.imagePath,
+      ingredients: upRecipe.ingredients,
+    };
+    this.apollo
+      .mutate({
+        mutation: UpdateRecipeMutation,
+        variables: { updatedRecipe: upRecipe },
+      })
       .pipe(
-        tap((response: { message: string; data: Recipe }) => {
+        map((response: any) => response.data.editRecipe),
+        tap((response: Response) => {
           this.recipes.forEach((r) => {
             if (r._id === upRecipe._id) {
               Object.assign(r, response.data);
             }
             this.updatedRecipes();
-            this.notifier.showSuccess('Recipe was updated successfully');
           });
         })
-      );
+      )
+      .subscribe((response: Response) => {
+        const id = response.data._id;
+        this.notifier.showSuccess(response.message);
+        this.router.navigate(['/recipe-book', id]);
+      });
   }
   deleteRecipe(_id: string) {
-    this.http.delete(BACKEND_URL + 'recipes/' + _id).subscribe((response) => {
-      this.getRecipes();
-      this.notifier.showSuccess('Recipe was deleted successfully');
-    });
+    this.apollo
+      .mutate({
+        mutation: DeleteRecipeMutation,
+        variables: { id: _id },
+      })
+      .pipe(map((response: any) => response.data.deleteRecipe))
+      .subscribe((response: Response) => {
+        console.log(response);
+        this.recipes = this.recipes.filter(
+          (recipe) => recipe._id !== response.data._id
+        );
+        this.updatedRecipes();
+        this.notifier.showSuccess(response.message);
+        this.router.navigate(['../'], { relativeTo: this.route });
+      });
   }
   updatedRecipes() {
     this.recipesUpdated.next(this.recipes.slice());

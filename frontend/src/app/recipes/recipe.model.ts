@@ -24,6 +24,7 @@ export interface RecipeI {
   ingredients: Ingredient[];
 }
 export interface NewRecipeInput {
+  _id?: string;
   name: string;
   description: string;
   imagePath: string;
@@ -34,7 +35,6 @@ export interface Response {
   message: string;
   data: any;
 }
-
 
 export const GetRecipesQuery = gql`
   query GetRecipes {
@@ -75,6 +75,40 @@ export const GetRecipeQuery = gql`
 export const AddRecipeMutation = gql`
   mutation AddRecipe($newRecipe: NewRecipeInput!) {
     addRecipe(input: $newRecipe) {
+      message
+      data {
+        _id
+        name
+        description
+        imagePath
+        ingredients {
+          name
+          amount
+        }
+      }
+    }
+  }
+`;
+export const UpdateRecipeMutation = gql`
+  mutation updateRecipe($updatedRecipe: NewRecipeInput!) {
+    editRecipe(input: $updatedRecipe) {
+      message
+      data {
+        _id
+        name
+        description
+        imagePath
+        ingredients {
+          name
+          amount
+        }
+      }
+    }
+  }
+`;
+export const DeleteRecipeMutation = gql`
+  mutation deleteRecipe($id: ID!) {
+    deleteRecipe(input: $id) {
       message
       data {
         _id

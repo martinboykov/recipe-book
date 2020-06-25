@@ -47,9 +47,6 @@ module.exports = {
   },
   Mutation: {
     addRecipe: async (_, args) => {
-      debug(args);
-      debug(args.input.ingredients);
-
       const recipe = new Recipe({
         name: args.input.name,
         description: args.input.description,
@@ -60,10 +57,39 @@ module.exports = {
       await recipe.save();
 
       return {
-        message: 'Recipe added successfully',
+        message: 'Recipe was added successfully',
         data: recipe,
       };
     },
+    editRecipe: async (_, args) => {
+      const recipe = await Recipe.findOneAndUpdate(
+        { _id: args.input._id },
+        {
+          $set: {
+            name: args.input.name,
+            description: args.input.description,
+            imagePath: args.input.imagePath,
+            ingredients: [...args.input.ingredients]
+          }
+        },
+        { new: true }
+      );
+
+      return {
+        message: 'Recipe was edited successfully',
+        data: recipe,
+      };
+    },
+    deleteRecipe: async (_, args) => {
+      console.log(args.input);
+      const recipe = await Recipe.findOneAndDelete({ _id: args.input });
+      console.log(recipe);
+      return {
+        message: 'Recipe was deleted successfully',
+        data: recipe,
+      };
+    },
+
 
     // editRecipe: async (req, res, next) => {
     //   const recipe = await Recipe.findOneAndUpdate(
