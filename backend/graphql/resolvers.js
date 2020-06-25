@@ -3,7 +3,7 @@ const debug = require('debug')('debug');
 
 module.exports = {
   Query: {
-    getRecipes: async (parent, args, context, info) => {
+    recipes: async (parent, args, context, info) => {
       const recipes = await Recipe.find();
       if (recipes.length <= 0) {
         return res.status(400).json({ message: 'No recipes yet!' });
@@ -22,7 +22,7 @@ module.exports = {
         })
       }
     },
-    getRecipe: async (parent, args, context, info) => {
+    recipe: async (parent, args, context, info) => {
       const _id = args._id;
       const recipe = await Recipe.findOne({
         _id: _id

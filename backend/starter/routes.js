@@ -9,6 +9,12 @@ const { ApolloServer } = require('apollo-server-express');
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  playground: {
+    settings: {
+      'editor.theme': 'light',
+    },
+  },
+  tracing: true,
 });
 
 module.exports = ((app) => {

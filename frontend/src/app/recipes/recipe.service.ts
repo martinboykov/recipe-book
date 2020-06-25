@@ -1,10 +1,12 @@
 import { Injectable, EventEmitter, Output } from '@angular/core';
-import { Recipe } from './recipe.model';
+import { Recipe, GetRecipesQuery, GetRecipeQuery } from './recipe.model';
 import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { NotificationService } from '../logging/notification.service';
-import { tap } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
+import { Apollo } from 'apollo-angular';
+
 const BACKEND_URL = environment.backendUrl;
 
 @Injectable({
@@ -15,20 +17,42 @@ export class RecipeService {
   recipes: Recipe[] = [];
   recipe: Recipe;
   constructor(
+    private apollo: Apollo,
     private http: HttpClient,
     private notifier: NotificationService
   ) {}
 
   getRecipes() {
-    this.http
-      .get(BACKEND_URL + 'recipes/')
-      .subscribe((response: { message: string; data: Recipe[] }) => {
-        this.recipes = [...response.data];
+    // this.http
+    //   .get(BACKEND_URL + 'recipes/')
+    //   .subscribe((response: { message: string; data: Recipe[] }) => {
+    //     this.recipes = [...response.data];
+    //     this.updatedRecipes();
+    //   });
+    this.apollo
+      .watchQuery({
+        query: GetRecipesQuery,
+      })
+      .valueChanges.pipe(map((result: any) => result.data.recipes))
+      .subscribe((result: any) => {
+        this.recipes = [...result.data];
         this.updatedRecipes();
       });
   }
-  getRecipe(_id: string) {
-    return this.http.get(BACKEND_URL + 'recipes/' + _id);
+  getRecipe(_id) {
+    // return this.http.get(BACKEND_URL + 'recipes/' + _id);
+    console.log(_id);
+
+    return this.apollo
+      .watchQuery({
+        query: GetRecipeQuery,
+        variables: { recipeId: _id },
+      })
+      .valueChanges.pipe(map((result: any) => result.data.recipe));
+    // .subscribe((result: any) => {
+    //   this.recipes = [...result.data];
+    //   this.updatedRecipes();
+    // });
   }
   addRecipe(newRecipe: Recipe) {
     const recipe = new Recipe(

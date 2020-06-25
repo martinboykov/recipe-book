@@ -1,10 +1,17 @@
 header {
   background-color: var(--light);
   margin: 0 0 20px 0;
+  background-color: var(--primary);
 }
+
 header nav,
 header > .navbar {
-  padding-left: 0;
+  padding-left: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+.navbar-brand {
+  color: var(--light);
 }
 .navbar-collapse {
   justify-content: space-between;
@@ -14,11 +21,62 @@ header > .navbar {
   height: auto;
 }
 .navbar-light .navbar-nav .nav-link {
-  color: var(--dark);
-  transition: transform 0.3s linear;
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 80px;
+  color: var(--light);
   backface-visibility: hidden;
+  outline: none;
 }
-.navbar-light .navbar-nav .nav-link.active {
-  color: var(--grey);
-  transform: scale(1.05) translateZ(0);;
+.navbar-light .navbar-nav .nav-link:focus {
+  box-shadow: inset 0 0px 1px rgba(0, 0, 0, 0.075);
+}
+.navbar-light .navbar-nav.navbar-left .nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  display: block;
+  height: 5px;
+  width: 100%;
+  transform: scale(0);
+
+  background-color: var(--light);
+  transition: transform ease-in-out 200ms;
+}
+
+.navbar-light .navbar-nav.navbar-left .nav-link.active::after {
+  width: 100%;
+  transform: scale(1);
+}
+
+@media screen and (max-width: 768px) {
+  .navbar-toggler {
+    border-color: rgb(255,255,255);
+  }
+  .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+  }
+
+
+  .navbar-light .navbar-nav .nav-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: unset;
+    padding: 0.5rem 1rem;
+  }
+  .navbar-light .navbar-nav.navbar-left .nav-link::after {
+    top: 0px;
+    left: 0px;
+    display: block;
+    height: 100%;
+    width: 0px;
+    transform: none;
+    background-color: var(--light);
+  }
+  .navbar-light .navbar-nav.navbar-left .nav-link.active::after {
+    width: 5px;
+  }
 }

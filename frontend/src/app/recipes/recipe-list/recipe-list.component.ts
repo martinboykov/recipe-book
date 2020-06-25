@@ -20,6 +20,7 @@ export class RecipeListComponent implements OnInit {
     this.rService.recipesUpdated.subscribe((recipes) => {
       this.recipes = recipes;
     });
+
   }
   addRecipe() {
     this.router.navigate(['new'], { relativeTo: this.route });

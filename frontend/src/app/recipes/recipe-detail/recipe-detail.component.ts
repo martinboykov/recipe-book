@@ -29,14 +29,12 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
       .pipe(
         concatMap((params: ParamMap) => {
           this._id = params.get('_id');
-          if (this._id) {
-            return this.recipeService.getRecipe(this._id);
-          }
+          if (this._id) return this.recipeService.getRecipe(this._id);
           return of(null);
         })
       )
-      .subscribe((res: { msg: string; data: Recipe }) => {
-        this.recipe = res?.data;
+      .subscribe((result) => {
+        this.recipe = result.data;
       });
   }
   sendIngredients(ingredients: Ingredient[]) {

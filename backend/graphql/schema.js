@@ -6,8 +6,8 @@ module.exports = gql`
   scalar Date
 
   type Query {
-    getRecipes: RecipesResponse!
-    getRecipe(_id: ID!): RecipeResponse!
+    recipes: RecipesResponse!
+    recipe(_id: ID!): RecipeResponse!
   }
   type RecipesResponse {
     message: String!
@@ -31,8 +31,4 @@ module.exports = gql`
     name: String!
     amount: Int!
   }
-
-  # schema {
-  #   query: Query
-  # }
 `;
