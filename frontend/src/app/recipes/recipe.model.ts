@@ -23,18 +23,22 @@ export interface RecipeI {
   imagePath: string;
   ingredients: Ingredient[];
 }
-
-export interface AllRecipesQueryResponse {
-  recipes: Recipe[];
+export interface NewRecipeInput {
+  name: string;
+  description: string;
+  imagePath: string;
+  ingredients: Ingredient[];
 }
 
-export interface RecipesDetailQueryResponse {
-  recipes: Recipe;
+export interface Response {
+  message: string;
+  data: any;
 }
+
 
 export const GetRecipesQuery = gql`
   query GetRecipes {
-    recipes {
+    getRecipes {
       message
       data {
         _id
@@ -52,7 +56,25 @@ export const GetRecipesQuery = gql`
 
 export const GetRecipeQuery = gql`
   query GetRecipe($recipeId: ID!) {
-    recipe(_id: $recipeId) {
+    getRecipe(input: $recipeId) {
+      message
+      data {
+        _id
+        name
+        description
+        imagePath
+        ingredients {
+          name
+          amount
+        }
+      }
+    }
+  }
+`;
+
+export const AddRecipeMutation = gql`
+  mutation AddRecipe($newRecipe: NewRecipeInput!) {
+    addRecipe(input: $newRecipe) {
       message
       data {
         _id

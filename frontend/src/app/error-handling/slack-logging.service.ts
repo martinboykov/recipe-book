@@ -22,10 +22,9 @@ export class SlackErrorLoggingService {
       this.logHistory.clear();
       arr.forEach((a) => this.logHistory.add(a));
     }
-    // console.log(this.logHistory.entries());
     const router = this.injector.get(Router);
     const messageObj = {
-      channel: '#thenewsroom',
+      channel: '#recipe-book',
       text: message, // error.message
       attachments: [
         {

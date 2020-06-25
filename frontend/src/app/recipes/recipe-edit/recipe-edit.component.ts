@@ -46,31 +46,31 @@ export class RecipeEditComponent implements OnInit {
       this._id = params.get('_id');
       if (this._id) {
         this.editMode = true;
-        this.recipeService
-          .getRecipe(this._id)
-          .subscribe((res: { msg: string; data: Recipe }) => {
-            this.recipe = res.data;
-            this.recipeForm.patchValue({
-              _id: this.recipe._id,
-              name: this.recipe.name,
-              imagePath: this.recipe.imagePath,
-              description: this.recipe.description,
-            });
-            this.recipe.ingredients.forEach((recipe) => {
-              this.ingredients.push(
-                this.fb.group({
-                  name: [recipe.name, Validators.required],
-                  amount: [recipe.amount, Validators.required],
-                })
-              );
-            });
+        this.recipeService.getRecipe(this._id).subscribe((res: Recipe) => {
+          console.log(res);
+
+          this.recipe = res;
+          this.recipeForm.patchValue({
+            _id: this.recipe._id,
+            name: this.recipe.name,
+            imagePath: this.recipe.imagePath,
+            description: this.recipe.description,
           });
+          this.recipe.ingredients.forEach((recipe) => {
+            this.ingredients.push(
+              this.fb.group({
+                name: [recipe.name, Validators.required],
+                amount: [recipe.amount, Validators.required],
+              })
+            );
+          });
+        });
       } else {
         this.editMode = false;
         this.ingredients.push(
           this.fb.group({
             name: ['', Validators.required],
-            amount: ['  ', Validators.required],
+            amount: ['', Validators.required],
           })
         );
       }
@@ -92,7 +92,6 @@ export class RecipeEditComponent implements OnInit {
   }
   onSubmit() {
     this.recipeService.addRecipe(this.recipeForm.value);
-    this.router.navigate(['recipe-book']);
   }
   onEditRecipe() {
     this.recipeService.editRecipe(this.recipeForm.value).subscribe(() => {

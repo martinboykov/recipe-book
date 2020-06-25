@@ -6,9 +6,20 @@ module.exports = gql`
   scalar Date
 
   type Query {
-    recipes: RecipesResponse!
-    recipe(_id: ID!): RecipeResponse!
+    getRecipes: RecipesResponse!
+    getRecipe(input: ID!): RecipeResponse!
   }
+
+  type Mutation {
+    addRecipe(input: NewRecipeInput!): RecipeResponse!
+  }
+  input NewRecipeInput {
+    name: String!
+    description: String!
+    imagePath: String!
+    ingredients: [IngredientInput!]!
+  }
+
   type RecipesResponse {
     message: String!
     data: [Recipe]
@@ -29,6 +40,10 @@ module.exports = gql`
   }
   type Ingredient {
     name: String!
-    amount: Int!
+    amount: Float!
+  }
+  input IngredientInput {
+    name: String!
+    amount: Float!
   }
 `;

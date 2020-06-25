@@ -34,7 +34,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe((result) => {
-        this.recipe = result.data;
+        this.recipe = result;
       });
   }
   sendIngredients(ingredients: Ingredient[]) {

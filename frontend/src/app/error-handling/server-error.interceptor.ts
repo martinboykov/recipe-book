@@ -13,7 +13,6 @@ export class ServerErrorInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       retry(1),
       catchError((error: HttpErrorResponse) => {
-        console.log(HttpErrorResponse);
         return throwError(error);
       })
     );
